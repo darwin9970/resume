@@ -1,0 +1,33 @@
+/* @Author: Drinkee */
+@media print {
+  html,
+  body {
+    background: #fff;
+  }
+  .resume-page {
+    margin: 0 !important;
+  }
+  .resume-aside {
+    position: relative;
+    height: 2970px;
+  }
+  #pdf-button {
+    display: none;
+  }
+  .more {
+    margin-top: 30px;
+  }
+  .comp-progress-bar {
+    height: 10px !important;
+    margin-bottom: 5px;
+  }
+  #second-page-title {
+    display: block !important;
+  }
+}
+
+@page {
+  size: A4;
+}
+
+
