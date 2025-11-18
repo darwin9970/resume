@@ -1,21 +1,13 @@
 <template>
   <div class="resume-content">
-    <work />
-    <project />
+    <Work />
+    <Project />
   </div>
 </template>
 
-<script>
+<script setup>
 import Project from './project';
 import Work from './work';
-
-export default {
-  name: 'Content',
-  components: {
-    Project,
-    Work,
-  },
-};
 </script>
 
 <style lang="scss" scoped>
@@ -25,10 +17,9 @@ export default {
   padding: 35px 30px 20px 30px;
   box-sizing: border-box;
   background: #fff;
-  @media screen and (max-width: 1049px){
+
+  @media screen and (max-width: 1049px) {
     padding-bottom: 150px;
   }
 }
 </style>
-
-

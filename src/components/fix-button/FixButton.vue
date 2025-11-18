@@ -1,28 +1,12 @@
 <template>
-  <div
-    id="fix-button-wrapper"
-    v-clickoutside="handleClose"
-  >
-    <div
-      id="fix-button"
-      @click="toggleDirShow(!directoryShow)"
-    >
+  <div id="fix-button-wrapper" v-clickoutside="handleClose">
+    <div id="fix-button" @click="toggleDirShow(!directoryShow)">
       <i :class="buttonIconClass" />
     </div>
-    <transition
-      enter-active-class="animated fadeInUp fastest"
-      leave-active-class="animated fadeOutDown fastest"
-    >
-      <div
-        v-show="directoryShow"
-        id="directory-box"
-      >
-        <div
-          v-for="(dir, dIndex) in directories"
-          :key="`dir${dIndex}}`"
-          class="directory-item"
-          @click="scrollToTarget(dir.target)"
-        >
+    <transition enter-active-class="animated fadeInUp fastest" leave-active-class="animated fadeOutDown fastest">
+      <div v-show="directoryShow" id="directory-box">
+        <div v-for="(dir, dIndex) in directories" :key="`dir${dIndex}}`" class="directory-item"
+          @click="scrollToTarget(dir.target)">
           {{ dir.name }}
         </div>
       </div>
@@ -30,59 +14,57 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue';
 import $ from 'jquery';
 
-export default {
-  name: 'FixButton',
-  data() {
-    return {
-      directoryShow: false,
-      directories: [
-        { name: '基本信息', target: '#base' },
-        { name: '教育背景', target: '#edu' },
-        { name: '技能水平', target: '#skill' },
-        { name: '个人评价', target: '#evalution' },
-        { name: '工作经历', target: '#work' },
-        { name: '项目经验', target: '#project' },
-      ],
-      activeDir: 'base',
-    };
-  },
-  computed: {
-    buttonIconClass() {
-      return `iconfont ${this.directoryShow ? 'icon-arrow-down' : 'icon-directory'}`;
-    },
-  },
-  methods: {
-    toggleDirShow(val) {
-      this.directoryShow = val;
-    },
-    handleClose() {
-      this.toggleDirShow(false);
-    },
-    scrollToTarget(target) {
-      const container = document.documentElement;
-      const targetEl = document.querySelector(target);
-      $(container).animate({
-        scrollTop: $(targetEl)[0].offsetTop - 5,
-      });
+const directoryShow = ref(false);
+const directories = ref([
+  { name: '基本信息', target: '#base' },
+  { name: '教育背景', target: '#edu' },
+  { name: '技能水平', target: '#skill' },
+  { name: '个人评价', target: '#evalution' },
+  { name: '工作经历', target: '#work' },
+  { name: '项目经验', target: '#project' },
+]);
+const activeDir = ref('base');
 
-      this.toggleDirShow(false);
-    },
-  },
+const buttonIconClass = computed(() => {
+  return `iconfont ${directoryShow.value ? 'icon-arrow-down' : 'icon-directory'}`;
+});
+
+const toggleDirShow = (val) => {
+  directoryShow.value = val;
+};
+
+const handleClose = () => {
+  toggleDirShow(false);
+};
+
+const scrollToTarget = (target) => {
+  const container = document.documentElement;
+  const targetEl = document.querySelector(target);
+  $(container).animate({
+    scrollTop: $(targetEl)[0].offsetTop - 5,
+  });
+
+  toggleDirShow(false);
 };
 </script>
 
 <style lang="scss" scoped>
 @use "@/styles/common.scss" as *;
+
 @mixin box-shadow {
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.12);
 }
+
 #fix-button-wrapper {
   color: #666;
+
   #fix-button {
     display: none;
+
     @media screen and (max-width: 1049px) {
       display: flex;
       justify-content: center;
@@ -108,21 +90,25 @@ export default {
   bottom: 90px;
   background: #fff;
   @include box-shadow();
+
   .directory-item {
     font-size: 16px;
     line-height: 3;
     padding: 0 15px;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+
     &.is-active {
       border-bottom: 2px solid $deep-blue;
     }
+
     &:hover {
       outline: none;
       background: rgba($color: $deep-blue, $alpha: 0.2);
       color: $deep-blue;
     }
   }
+
   @media screen and (max-width: 1049px) {
     &:active {
       outline: none;
@@ -131,10 +117,9 @@ export default {
     }
   }
 }
+
 .animated.fastest {
   -webkit-animation-duration: 200ms;
   animation-duration: 300ms;
 }
 </style>
-
-

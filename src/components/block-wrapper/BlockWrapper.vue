@@ -1,15 +1,7 @@
 <template>
-  <div
-    :id="id"
-    class="block-wrapper"
-  >
-    <div
-      class="block-wrapper-header"
-    >
-      <div
-        class="block-wrapper-header__title"
-        :class="{dark: theme === 'dark'}"
-      >
+  <div :id="id" class="block-wrapper">
+    <div class="block-wrapper-header">
+      <div class="block-wrapper-header__title" :class="{ dark: theme === 'dark' }">
         {{ title }}
       </div>
     </div>
@@ -17,28 +9,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BlockWrapper',
-  props: {
-    title: {
-      type: String,
-      default: '',
-    },
-    theme: {
-      type: String,
-      default: 'light',
-    },
-    id: {
-      type: String,
-      default: '',
-    },
+<script setup>
+defineProps({
+  title: {
+    type: String,
+    default: '',
   },
-};
+  theme: {
+    type: String,
+    default: 'light',
+  },
+  id: {
+    type: String,
+    default: '',
+  },
+});
 </script>
 
 <style lang="scss" scoped>
 @use "@/styles/common.scss" as *;
+
 @mixin split-line {
   position: absolute;
   display: block;
@@ -48,23 +38,28 @@ export default {
   height: 2px;
   width: calc(50% - 120px);
 }
+
 .block-wrapper {
   margin-bottom: 15px;
   color: $text-color;
   text-align: left;
+
   &-header {
     position: relative;
     display: flex;
     justify-content: center;
     padding: 5px 0;
+
     &:before {
       left: 0;
       @include split-line();
     }
+
     &:after {
       right: 0;
       @include split-line();
     }
+
     &__title {
       line-height: 2;
       width: 200px;
@@ -74,12 +69,11 @@ export default {
       color: $deep-blue;
       font-size: 22px;
       font-weight: bold;
+
       &.dark {
-        background: rgba($color: $deep-blue, $alpha: 0.1) ;
+        background: rgba($color: $deep-blue, $alpha: 0.1);
       }
     }
   }
 }
 </style>
-
-
